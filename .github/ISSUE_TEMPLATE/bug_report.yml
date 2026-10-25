@@ -1,0 +1,51 @@
+name: Bug 反馈 / Bug report
+description: 报告播放、系统音频、画面或窗口问题
+title: "[Bug] "
+body:
+  - type: input
+    id: version
+    attributes:
+      label: 应用版本 / Version
+      placeholder: 1.0.0-alpha.10
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 环境 / Environment
+      description: Windows 版本、显卡型号；系统音频问题请补充默认输出设备。
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: 音频来源 / Audio source
+      options:
+        - 系统声音
+        - 音乐文件
+        - 共振演示
+        - 纯音 / 扫频
+        - 与音频来源无关
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 重现步骤 / Steps to reproduce
+      description: 请注明音乐响应或薄板共振、板形、预设及相关参数。
+      placeholder: "1. 打开应用并选择……"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: 预期行为 / Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: 实际行为 / Actual behavior
+      description: 可附截图或日志；请先移除私人路径、音乐文件和凭据。
+    validations:
+      required: true

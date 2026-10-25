@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self' chladni-media: blob:; connect-src 'self' chladni-media:; object-src 'none'; base-uri 'none'">
+  <title>Chladni Studio · 克拉尼之盘</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 10v4m4-8v12m5-16v20m5-16v12m4-8v4"/></symbol>
+    <symbol id="i-screen" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8m-4-4v4m-5-10h2l2-3 2 5 2-3h2"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13M9 9l12-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="18" cy="16" rx="3" ry="3"/></symbol>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="11" ry="5" transform="rotate(-45 12 12)"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-prev" viewBox="0 0 24 24"><path d="M5 5v14m14-14L8 12l11 7Z"/></symbol>
+    <symbol id="i-next" viewBox="0 0 24 24"><path d="M19 5v14M5 5l11 7-11 7Z"/></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="m11 4-6 5H2v6h3l6 5Zm4 4a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M8 5 6 8H3v13h18V8h-3l-2-3Z"/><circle cx="12" cy="14" r="4"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6"/></symbol>
+    <symbol id="i-loop" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4M3 11V8a2 2 0 0 1 2-2h16M7 22l-4-4 4-4m14-3v5a2 2 0 0 1-2 2H3"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.1M3 12h.1M3 18h.1"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10v.2"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </svg>
+  <header class="titlebar">
+    <div class="brand-mark"><svg viewBox="0 0 32 32"><path d="M4 4h24v24H4Z M4 16Q16-5 28 16Q16 37 4 16 M16 4Q-5 16 16 28Q37 16 16 4"/></svg></div>
+    <span class="brand">CHLADNI<span>STUDIO</span></span><span class="title-divider"></span><span class="brand-caption">声音的形状</span>
+    <span class="version">1.0.0-alpha.10</span>
+  </header>
+  <div class="workspace">
+    <aside class="sidebar">
+      <section class="source-section">
+        <div class="section-label">音频来源 <span>01</span></div>
+        <div class="source-tabs" role="tablist" aria-label="音频来源">
+          <button class="source-tab" data-source="system" role="tab" aria-selected="false"><svg><use href="#i-screen"/></svg><span>系统声音</span><span class="tab-dot"></span></button>
+          <button class="source-tab" data-source="file" role="tab" aria-selected="false"><svg><use href="#i-music"/></svg><span>音乐文件</span><span class="tab-dot"></span></button>
+          <button class="source-tab selected" data-source="demo" role="tab" aria-selected="true"><svg><use href="#i-orbit"/></svg><span>共振演示</span><span class="tab-dot"></span></button>
+          <button class="source-tab" data-source="lab" role="tab" aria-selected="false"><svg><use href="#i-wave"/></svg><span>纯音 / 扫频</span><span class="tab-dot"></span></button>
+        </div>
+        <div class="source-detail" id="source-detail">
+          <p id="source-description">从一粒沙开始，探索声音的几何。<br>试听内置共振音，或接入你的音乐。</p>
+          <button id="source-action" class="outline-button"><svg><use href="#i-play"/></svg><span>试听共振音</span></button>
+        </div>
+      </section>
+      <section class="lab-section"><details id="lab-panel"><summary>共振实验室 <span>LAB</span></summary>
+        <div class="segmented" aria-label="实验音类型"><button data-lab-mode="tone" class="selected">持续纯音</button><button data-lab-mode="sweep">自动扫频</button></div>
+        <div id="lab-tone-controls"><label class="slider-label" for="lab-frequency">纯音频率 <input id="lab-frequency-number" class="number-input" type="number" min="20" max="4000" step="0.1" value="63.1" aria-label="纯音频率数值"></label><input id="lab-frequency" type="range" min="20" max="4000" step="0.1" value="63.1"><button id="lab-match" class="lab-link">对准共振频率</button></div>
+        <div id="lab-sweep-controls" hidden><div class="lab-number-row"><label>起点 Hz<input id="lab-start" class="number-input" type="number" min="20" max="4000" step="0.1" value="40"></label><span>→</span><label>终点 Hz<input id="lab-end" class="number-input" type="number" min="20" max="4000" step="0.1" value="220"></label></div><label class="slider-label" for="lab-duration">单程时长 <output id="lab-duration-value">30 秒</output></label><input id="lab-duration" type="range" min="5" max="120" step="1" value="30"><div class="switch-row compact-switch"><label for="lab-loop">往返循环</label><input id="lab-loop" type="checkbox" class="switch" checked></div></div>
+        <label class="slider-label" for="lab-level">实验音强度 <output id="lab-level-value">25%</output></label><input id="lab-level" type="range" min="0" max="100" step="1" value="25"><p class="feature-hint">强度驱动板振动；播放器音量只调节听到的声音。修改实验音参数会重新起音。</p>
+        <button id="lab-play" class="outline-button">开始纯音</button><div class="lab-readout" id="lab-readout">实验音未启动</div><div class="feature-hint" id="lab-resonances">有输入后显示最强共振</div>
+        <div class="lab-divider"></div><div class="lab-actions"><button id="drive-select" aria-pressed="false">点选激振点</button><button id="drive-reset">复位</button></div><div class="feature-hint" id="drive-position">激振点 (0.180, 0.110)</div><p class="feature-hint" id="drive-hint">点选后在板面点击，改变激振位置；适用于全部音频来源。</p>
+        <div class="switch-row compact-switch"><label for="field-map">振动强弱底图</label><input id="field-map" type="checkbox" class="switch"></div><label class="slider-label" for="field-opacity">底图不透明度 <output id="field-opacity-value">25%</output></label><input id="field-opacity" type="range" min="0" max="60" step="1" value="25"><p class="feature-hint">薄板共振下显示相对振动强弱，余振消失后底图淡出。</p>
+      </details></section>
+      <section class="preset-section"><div class="section-label">视觉预设 <span>PRESETS</span></div><div class="preset-grid" aria-label="视觉预设"><button class="preset-card" data-preset="geometry" aria-pressed="false"><strong>清晰几何</strong><span>稳定轮廓与轻节奏</span></button><button class="preset-card" data-preset="beat" aria-pressed="false"><strong>节拍脉冲</strong><span>鲜明鼓点与明暗呼吸</span></button><button class="preset-card" data-preset="calm" aria-pressed="false"><strong>舒缓流沙</strong><span>缓慢演化与柔和流动</span></button><button class="preset-card" data-preset="detail" aria-pressed="false"><strong>细密纹理</strong><span>更多细节与高频结构</span></button></div><p class="preset-description" id="preset-description">清晰几何 · 稳定轮廓与轻节奏</p><div class="favorite-row"><select id="favorite-select" aria-label="我的收藏"><option value="">我的收藏</option></select><button id="favorite-save" title="收藏当前效果">收藏</button><button id="favorite-delete" aria-label="删除所选收藏" title="删除所选收藏" disabled>×</button></div></section>
+      <section>
+        <div class="section-label">视觉风格 <span>02</span></div>
+        <div class="palette-grid" aria-label="配色方案">
+          <button class="palette selected" data-palette="sand" title="琥珀细砂" aria-label="琥珀细砂"><span class="palette-preview sand"></span><span>琥珀细砂</span></button>
+          <button class="palette" data-palette="ice" title="极地冰蓝" aria-label="极地冰蓝"><span class="palette-preview ice"></span><span>极地冰蓝</span></button>
+          <button class="palette" data-palette="iris" title="紫色星尘" aria-label="紫色星尘"><span class="palette-preview iris"></span><span>紫色星尘</span></button>
+          <button class="palette" data-palette="silver" title="月光银白" aria-label="月光银白"><span class="palette-preview silver"></span><span>月光银白</span></button>
+        </div>
+        <div class="control-caption">振动板形状</div>
+        <div class="segmented" aria-label="振动板形状"><button class="selected" data-shape="square">□ 方形</button><button data-shape="circle">○ 圆形</button></div>
+      </section>
+      <section class="tuning">
+        <div class="section-label">共振调节 <button id="reset-settings" class="small-button" title="恢复默认设置" aria-label="恢复默认设置"><svg><use href="#i-reset"/></svg></button></div>
+        <div class="segmented tuning-tabs" aria-label="共振方式"><button class="selected" data-tuning="music" aria-pressed="true">音乐响应</button><button data-tuning="physical" aria-pressed="false">薄板共振</button></div>
+        <p class="tuning-description" id="tuning-description">平衡各频段能量，让节奏和音色持续推动砂纹。</p>
+        <div class="model-info" id="model-info">四边自由薄板 · 86 个振动模态</div>
+        <div class="switch-row compact-switch"><label for="auto-level">自动灵敏度</label><input id="auto-level" type="checkbox" class="switch" checked></div><p class="feature-hint" id="auto-level-status">仅影响画面，不改变播放音量</p><div class="switch-row compact-switch"><label id="refill-label" for="auto-refill">自动补砂</label><input id="auto-refill" type="checkbox" class="switch" checked></div><p class="feature-hint" id="refill-description">音乐播放时柔和补砂，静音时停止</p>
+        <label class="slider-label" for="refill-speed">补砂速度 <output id="refill-speed-value">1.00×</output></label><input id="refill-speed" type="range" min="0.25" max="2" value="1" step="0.25"><div class="sand-status" id="sand-status" aria-live="off">砂量约 100% · 砂量充足</div>
+        <label class="slider-label" for="fundamental">板的基频 <output id="fundamental-value">35 Hz</output></label>
+        <input id="fundamental" type="range" min="35" max="140" value="35" step="1">
+        <label class="slider-label" for="decay">共振余响 <output id="decay-value">1.0×</output></label>
+        <input id="decay" type="range" min="0.3" max="2" value="1" step="0.1">
+        <label class="slider-label" for="sensitivity">音频灵敏度 <output id="sensitivity-value">1.1×</output></label>
+        <input id="sensitivity" type="range" min="0.3" max="3" value="1.1" step="0.1">
+        <label class="slider-label" for="density">砂粒数量 <output id="density-value">64,000</output></label>
+        <input id="density" type="range" min="16000" max="96000" value="64000" step="16000">
+        <label class="slider-label" for="response">聚拢速度 <output id="response-value">1.0×</output></label>
+        <input id="response" type="range" min="0.3" max="2" value="1" step="0.1">
+        <label class="slider-label" for="glow">微光强度 <output id="glow-value">45%</output></label>
+        <input id="glow" type="range" min="0" max="100" value="45" step="1">
+        <div class="switch-row"><label for="auto-mode">随音乐连续演化</label><input id="auto-mode" type="checkbox" class="switch" checked></div>
+        <div class="mode-picker"><span>单频演示</span><button id="mode-prev" title="上一个模态" aria-label="上一个模态">−</button><output id="mode-value">455 Hz</output><button id="mode-next" title="下一个模态" aria-label="下一个模态">＋</button></div>
+      </section>
+      <button id="about-button" class="about-button"><svg><use href="#i-info"/></svg>关于克拉尼之盘 <span>↗</span></button>
+    </aside>
+    <main class="main">
+      <div class="page-heading"><div><div class="eyebrow">THE GEOMETRY OF SOUND</div><h1>克拉尼之盘<span>让声音，显露形状。</span></h1></div><div class="status-badge" id="status-badge"><i></i><span id="status-text">共振预览</span></div></div>
+      <div class="stage" id="stage">
+        <div class="stage-top"><span><i class="tiny-square"></i> RESONANCE FIELD</span><div class="stage-tools"><button id="scatter-button" class="icon-button" title="重新撒砂 · R" aria-label="重新撒砂"><svg><use href="#i-reset"/></svg></button><button id="snapshot-button" class="icon-button" title="保存图片" aria-label="保存图片"><svg><use href="#i-camera"/></svg></button><button id="cover-fullscreen-button" class="cover-fullscreen-button" title="整个应用界面全屏，覆盖任务栏 · Ctrl + F11" aria-label="应用全屏（覆盖任务栏）" aria-pressed="false"><svg><use href="#i-expand"/></svg><span>应用全屏</span></button><button id="fullscreen-button" class="icon-button" title="沙盘沉浸全屏 · F11" aria-label="沙盘沉浸全屏"><svg><use href="#i-expand"/></svg></button></div></div>
+        <div class="canvas-wrap" id="canvas-wrap"><canvas id="visualizer" aria-label="随音频变化的克拉尼砂粒驻波图案"></canvas><div id="field-legend" class="field-legend" hidden><span>弱</span><i></i><span>强 · 相对振动</span></div><div class="canvas-error" id="canvas-error" hidden></div></div>
+        <div class="stage-bottom"><div><span class="live-dot" id="live-dot"></span><span id="field-caption">驻波实验 · 静音预览</span></div><span id="field-mode">64 组共振 · 连续驱动</span><span class="fps" id="fps">60 FPS</span></div>
+        <div class="drop-overlay" id="drop-overlay"><svg><use href="#i-music"/></svg><strong>把音乐放在这里</strong><span>释放以导入并播放</span></div>
+      </div>
+      <div class="analysis-strip"><div class="metric"><span>主导频率</span><strong id="frequency">—<small> Hz</small></strong></div><div class="metric"><span>音频能量</span><strong id="energy">—<small> dBFS</small></strong></div><div class="spectrum-container"><div class="spectrum-label"><span>频谱 · SPECTRUM</span><span>40 Hz — 16 kHz</span></div><canvas id="spectrum" aria-label="实时音频频谱"></canvas></div><div class="band-meter"><div><span>低频</span><i><b id="bass-bar"></b></i></div><div><span>中频</span><i><b id="mid-bar"></b></i></div><div><span>高频</span><i><b id="high-bar"></b></i></div></div></div>
+      <footer class="main-footer"><span>细砂落在静止之处，声音留下自己的形状。</span><span>本地处理 · 无需联网</span></footer>
+    </main>
+  </div>
+  <div class="player">
+    <div class="track-info"><div class="album-art"><svg><use href="#i-wave"/></svg></div><div class="track-text"><strong id="track-title">共振实验室</strong><span id="track-subtitle">导入一首音乐，开始看见声音</span></div></div>
+    <div class="playback"><div class="playback-buttons"><button id="loop-button" class="icon-button" title="单曲循环" aria-label="单曲循环" aria-pressed="false"><svg><use href="#i-loop"/></svg></button><button id="prev-button" class="icon-button" title="上一首" aria-label="上一首"><svg><use href="#i-prev"/></svg></button><button id="play-button" class="play-button" title="播放 / 暂停 · 空格" aria-label="播放"><svg><use href="#i-play"/></svg></button><button id="next-button" class="icon-button" title="下一首" aria-label="下一首"><svg><use href="#i-next"/></svg></button><button id="queue-button" class="icon-button" title="播放列表" aria-label="播放列表"><svg><use href="#i-list"/></svg><span id="queue-count">0</span></button></div><div class="seek-row"><span id="current-time">0:00</span><input id="seek" type="range" min="0" max="1000" value="0" aria-label="播放进度" disabled><span id="duration">0:00</span></div></div>
+    <div class="player-right"><svg class="volume-icon"><use href="#i-volume"/></svg><input id="volume" type="range" min="0" max="100" value="65" aria-label="播放音量"><span id="volume-value">65%</span><button id="import-button" class="import-button"><svg><use href="#i-plus"/></svg>导入音乐</button></div>
+  </div>
+  <div class="queue-panel" id="queue-panel" hidden><div class="queue-header"><div>播放列表 <span id="queue-total">0 首</span></div><button id="queue-close" class="icon-button" aria-label="关闭播放列表"><svg><use href="#i-close"/></svg></button></div><div id="queue-list"><p class="queue-empty">还没有音乐。点击「导入音乐」或拖入音频文件。</p></div></div>
+  <button class="fullscreen-exit" id="fullscreen-exit" hidden>退出全屏 <kbd>Esc</kbd></button>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="about-dialog"><div class="dialog-header"><span>CHLADNI / 声音的形状</span><button id="about-close" class="icon-button" aria-label="关闭"><svg><use href="#i-close"/></svg></button></div><h2>当声音遇见细砂</h2><p>1787 年，恩斯特·克拉尼发现：让撒有细砂的薄板振动，砂粒会离开振幅较大的区域，聚在相对静止的节线上，形成对称的几何图案。</p><p>这里由音频波形持续激发薄板的受迫阻尼振动：方板和圆板均采用自由边缘薄板振型，默认由近中心点激振，可在实验室中点选位置。音乐响应会突出主导节线，并随节奏流动和明暗起伏；薄板共振保留更强的频率选择性。薄板共振使用平均振动加速度；音乐响应用包络叠加强化节线。砂粒近似计算惯性、摩擦、密度压力与起落，停音后砂粒会静止，越过板边的砂粒会落下，可按 R 重新撒砂。实验室的纯音与扫频通过真实音频激振，振动底图显示相对强弱。手动单频演示使用模拟激励；砂粒接触仍为近似。</p><div class="dialog-tip"><strong>快捷键</strong><span>空格：播放 / 暂停　　R：重新撒砂<br>F11：沙盘沉浸全屏　　Ctrl + F11：应用全屏<br>Esc：退出全屏　　Ctrl + O：导入音乐</span></div><p class="privacy-note">音频分析与播放均在本机完成。系统声音模式监听 Windows 当前默认输出设备；切换耳机或扬声器后请重新开始监听。支持 MP3、WAV、FLAC、OGG 等，实际解码能力取决于格式与编码。</p><div class="dialog-version">CHLADNI STUDIO · WINDOWS · 1.0.0-alpha.10</div></dialog>
+  <dialog id="favorite-dialog" class="favorite-dialog"><form id="favorite-form"><h2>收藏当前效果</h2><label for="favorite-name">名称</label><input id="favorite-name" type="text" maxlength="32" required autocomplete="off"><p>保存画面与响应参数，播放音量和歌曲保持当前设置。</p><div class="favorite-actions"><button type="button" id="favorite-cancel">取消</button><button type="submit" id="favorite-confirm">保存收藏</button></div></form></dialog>
+  <audio id="audio" preload="metadata" crossorigin="anonymous"></audio>
+  <script src="plate-data.js"></script>
+  <script src="physics.js"></script>
+  <script src="presets.js"></script>
+  <script src="engine.js"></script>
+  <script src="experiment.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

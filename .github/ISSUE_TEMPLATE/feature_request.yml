@@ -1,0 +1,22 @@
+name: 功能建议 / Feature request
+description: 提出改善音乐可视化或播放器体验的想法
+title: "[Feature] "
+body:
+  - type: textarea
+    id: scenario
+    attributes:
+      label: 使用场景 / Use case
+      description: 你在什么场景下遇到哪些困难？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 希望的行为 / Proposed behavior
+      description: 请描述操作方式和预期效果，可附示意图。
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 其他方案 / Alternatives

@@ -1,0 +1,219 @@
+{
+  "version": "1.0.0-alpha.10",
+  "checks": [
+    "Dedicated cover-taskbar button is visible",
+    "Button enters native fullscreen with taskbar coverage enabled",
+    "Window fills display bounds including the taskbar area",
+    "Entire app stays visible in cover-taskbar fullscreen",
+    "Fullscreen app layout fits with the canvas inside the editor",
+    "Player controls remain usable in app fullscreen",
+    "Playlist opens in app fullscreen",
+    "Sidebar controls remain usable in app fullscreen",
+    "Escape closes a dialog without leaving app fullscreen",
+    "Windows hit-test at the taskbar finds this app above Explorer",
+    "Escape restores the window bounds and releases topmost",
+    "F11 opens the separate sand-only immersive view",
+    "An existing fullscreen window can enable taskbar coverage",
+    "Switching from sand view to app fullscreen restores the full UI",
+    "Exit button releases taskbar coverage",
+    "Ctrl+F11 enters cover-taskbar fullscreen",
+    "Sand-view button can switch from app fullscreen to immersion",
+    "Switching focus releases temporary topmost",
+    "Refocusing restores taskbar coverage",
+    "Native fullscreen exit clears the cover flag and topmost",
+    "A previously maximized window stays maximized on exit",
+    "Repeated toggles leave no topmost state behind",
+    "GPU remains healthy after fullscreen resizes",
+    "No renderer exceptions during fullscreen transitions"
+  ],
+  "errors": [],
+  "initial": {
+    "fullscreen": false,
+    "topmost": false,
+    "focused": true,
+    "maximized": false,
+    "bounds": {
+      "x": 20,
+      "y": 20,
+      "width": 1201,
+      "height": 801
+    },
+    "normal": {
+      "x": 20,
+      "y": 20,
+      "width": 1201,
+      "height": 801
+    },
+    "screen": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "handle": "3803138"
+  },
+  "entered": {
+    "fullscreen": true,
+    "topmost": true,
+    "focused": true,
+    "maximized": false,
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "normal": {
+      "x": 19,
+      "y": 20,
+      "width": 1203,
+      "height": 802
+    },
+    "screen": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "handle": "3803138"
+  },
+  "appLayout": {
+    "appFullscreen": true,
+    "immersive": false,
+    "header": true,
+    "sidebar": true,
+    "player": true,
+    "analysis": true,
+    "importButton": true,
+    "fits": true,
+    "canvasInsideLayout": true
+  },
+  "beforeTaskbarProbe": {
+    "fullscreen": true,
+    "topmost": true,
+    "focused": true,
+    "maximized": false,
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "normal": {
+      "x": 19,
+      "y": 20,
+      "width": 1203,
+      "height": 802
+    },
+    "screen": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "handle": "3803138"
+  },
+  "taskbarProbe": {
+    "AppHandle": "3803138",
+    "TopWindow": "3803138",
+    "Point": {
+      "Y": 1564,
+      "X": 1280
+    },
+    "AppRect": {
+      "Left": 0,
+      "Top": 0,
+      "Right": 2560,
+      "Bottom": 1600
+    },
+    "TaskbarRect": {
+      "Left": 0,
+      "Top": 1528,
+      "Right": 2560,
+      "Bottom": 1600
+    },
+    "AppCoversTaskbar": true
+  },
+  "taskbarHitVerified": true,
+  "exited": {
+    "fullscreen": false,
+    "topmost": false,
+    "focused": true,
+    "maximized": false,
+    "bounds": {
+      "x": 20,
+      "y": 20,
+      "width": 1201,
+      "height": 801
+    },
+    "normal": {
+      "x": 20,
+      "y": 20,
+      "width": 1201,
+      "height": 801
+    },
+    "screen": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "handle": "3803138"
+  },
+  "blurred": {
+    "fullscreen": true,
+    "topmost": false,
+    "focused": false,
+    "maximized": false,
+    "bounds": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1066
+    },
+    "normal": {
+      "x": 19,
+      "y": 20,
+      "width": 1203,
+      "height": 802
+    },
+    "screen": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1067
+    },
+    "workArea": {
+      "x": 0,
+      "y": 0,
+      "width": 1707,
+      "height": 1019
+    },
+    "handle": "3803138"
+  },
+  "success": true
+}

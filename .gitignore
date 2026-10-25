@@ -1,0 +1,12 @@
+node_modules/
+.cache/
+release/
+output/
+*.log
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.DS_Store
+Thumbs.db

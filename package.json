@@ -1,0 +1,55 @@
+{
+  "name": "chladni-studio",
+  "version": "1.0.0-alpha.10",
+  "description": "克拉尼之盘 · 实时音乐可视化与本地播放器",
+  "author": "Chladni Studio",
+  "license": "MIT",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "test:desktop": "node scripts/desktop-smoke.cjs",
+    "assets": "node scripts/make-assets.cjs",
+    "dist": "electron-builder --win portable --x64",
+    "pack": "electron-builder --win --dir --x64"
+  },
+  "devDependencies": {
+    "electron": "45.0.0",
+    "electron-builder": "26.18.0",
+    "playwright": "1.58.2"
+  },
+  "build": {
+    "appId": "studio.chladni.desktop",
+    "productName": "Chladni Studio",
+    "asar": true,
+    "electronDist": "node_modules/electron/dist",
+    "directories": {
+      "output": "release",
+      "buildResources": "assets"
+    },
+    "files": [
+      "electron/**",
+      "src/**",
+      "assets/icon.ico",
+      "assets/icon.png",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "Chladni-Studio-${version}-Windows-x64.exe",
+      "signExecutable": false
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
+    }
+  }
+}
