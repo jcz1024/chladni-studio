@@ -101,6 +101,7 @@ Release 中提供 `SHA256SUMS.txt`。可用 PowerShell 的 `Get-FileHash .\Chlad
 git clone https://github.com/jcz1024/chladni-studio.git
 cd chladni-studio
 npm ci
+node node_modules/electron/install.js
 npm run assets
 npm start
 ```
@@ -125,7 +126,7 @@ node scripts/experience-smoke.cjs
 node scripts/fullscreen-smoke.cjs
 ```
 
-`npm run dist` 输出便携 exe 到 `release/`。Electron 首次启动开发环境时需要下载运行时。构建和测试缓存可通过环境变量 `electron_config_cache`、`ELECTRON_BUILDER_CACHE` 指定到可写目录；打包采用项目内已安装的 Electron 运行时。
+`npm run dist` 输出便携 exe 到 `release/`。本项目固定的 Electron 45 需要在 `npm ci` 后显式运行上述安装脚本，下载运行时；只安装 npm 包不足以启动或打包。构建和测试缓存可通过环境变量 `electron_config_cache`、`ELECTRON_BUILDER_CACHE` 指定到可写目录；打包采用项目内已安装的 Electron 运行时。CI 使用 `npm run pack -- --publish never`，只验证构建，不自动发布成品。
 
 `npm run test:desktop` 会短暂播放测试音，自动验证 GPU 聚拢、真实 FFT、文件播放／暂停／跳转／音量／循环／切歌、Windows 系统声音回环、全屏、错误恢复与图片保存。测试截图和 JSON 报告写入 `output/`。
 

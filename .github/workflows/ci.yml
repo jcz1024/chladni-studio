@@ -22,5 +22,6 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: node node_modules/electron/install.js
       - run: npm test
-      - run: npm run pack
+      - run: npm run pack -- --publish never

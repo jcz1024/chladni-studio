@@ -14,6 +14,7 @@
 
 ```powershell
 npm ci
+node node_modules/electron/install.js
 npm start
 npm test
 npm run pack
